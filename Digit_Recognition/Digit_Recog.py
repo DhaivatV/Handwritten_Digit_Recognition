@@ -67,3 +67,13 @@ def cross_entropy(y_pred, y_true):
 
 optimizer = tf.keras.optimizers.SGD(learning_rate)
 
+def run_optimizer(x, y):
+    with tf.GradientTape as g:
+        pred= neural_net(x)
+        loss= cross_entropy(pred, y)
+
+    trainable_variables= list(weights.values()) + list(biases.values())
+
+    gradients= g.gradient(loss, trainable_variables)
+
+    return optimizer.apply_gradient(zip(gradients, trainable_variables))

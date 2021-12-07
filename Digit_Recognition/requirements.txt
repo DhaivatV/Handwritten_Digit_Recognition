@@ -81,13 +81,3 @@ zipp @ file:///tmp/build/80754af9/zipp_1633618647012/work
 
 
 
-def run_optimizer(x, y):
-    with tf.GradientTape as g:
-        pred= neural_net(x)
-        loss= cross_entropy(pred, y)
-
-    trainable_variables= list(weights.values()) + list(biases.values())
-
-    gradients= g.gradient(loss, trainable_variables)
-
-    return optimizer.apply_gradient(zip(gradients, trainable_variables))
