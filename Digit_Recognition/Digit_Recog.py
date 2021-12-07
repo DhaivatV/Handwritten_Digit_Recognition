@@ -52,4 +52,11 @@ biases={
     'out':tf.Variable(tf.zeros(num_classes))
 }
 
+def neural_net(input_data):
+    hidden_layer = tf.add((tf.matmul(input_data,weights['h'])),biases['b'])
+    hidden_layer= tf.nn.sigmoid(hidden_layer)
+
+    out_layer = tf.matmul(hidden_layer, weights['out'])+biases['out']
+    out_layer= tf.nn.softmax(out_layer)
+    return tf.nn.softmax(out_layer)
 
