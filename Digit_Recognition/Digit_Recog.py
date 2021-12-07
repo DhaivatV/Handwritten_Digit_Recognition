@@ -60,3 +60,10 @@ def neural_net(input_data):
     out_layer= tf.nn.softmax(out_layer)
     return tf.nn.softmax(out_layer)
 
+def cross_entropy(y_pred, y_true):
+    y_true= tf.one_hot(y_true, depth= num_classes)
+    y_pred= tf.clip_by_value(y_pred, le-9, 1)
+    return tf.reduce_mean(-tf.reduce_sum(y_true*tf.math.log(y_pred)))
+
+optimizer = tf.keras.optimizers.SGD(learning_rate)
+

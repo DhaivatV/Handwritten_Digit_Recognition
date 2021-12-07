@@ -81,13 +81,6 @@ zipp @ file:///tmp/build/80754af9/zipp_1633618647012/work
 
 
 
-def cross_entropy(y_pred, y_true):
-    y_true= tf.one_hot(y_true, depth= num_classes)
-    y_pred= tf.clip_by_value(y_pred, le-9, 1)
-    return tf.reduce_mean(-tf.reduce_sum(y_true*tf.math.log(y_pred)))
-
-optimizer = tf.keras.optimizers.SGD(learning_rate)
-
 def run_optimizer(x, y):
     with tf.GradientTape as g:
         pred= neural_net(x)
