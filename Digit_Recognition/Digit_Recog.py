@@ -31,5 +31,25 @@ prediction = clf.predict(x_test[144].reshape([1, 784]))
 
     
 
+learning_rate= 0.0003
+training_steps= 5000
+batch_size= 300
+display_step =300
+
+n_hidden= 520
+
+
+train_data = tf.data.Dataset.from_tensor_slices(x_train, y_train)
+train_data= train_data.repeat().shuffle(60000).batch(batch_size).prefetch(1)
+
+random_normal=tf.initializers.RandomNormal()
+weights= {
+             'h' : tf.Variable(random_normal(num_features, n_hidden)),
+            'out': tf.Variable(random_normal(n_hidden, num_classes))
+        }
+biases={
+    'b': tf.Variable(tf.zeros(n_hidden)),
+    'out':tf.Variable(tf.zeros(num_classes))
+}
 
 
