@@ -23,10 +23,10 @@ def displayimgs (num):
 
 displayimgs(144)
 
-clf = LogisticRegression()
-clf.fit(x_train, y_train)
+# clf = LogisticRegression()
+# clf.fit(x_train, y_train)
 
-prediction = clf.predict(x_test[144].reshape([1, 784]))
+# prediction = clf.predict(x_test[144].reshape([1, 784]))
 
 
     
@@ -36,20 +36,20 @@ training_steps= 5000
 batch_size= 300
 display_step =300
 
-n_hidden= 520
+n_hidden= 512
 
 
-train_data = tf.data.Dataset.from_tensor_slices(x_train, y_train)
+train_data = tf.data.Dataset.from_tensor_slices((x_train, y_train))
 train_data= train_data.repeat().shuffle(60000).batch(batch_size).prefetch(1)
 
 random_normal=tf.initializers.RandomNormal()
 weights= {
-             'h' : tf.Variable(random_normal(num_features, n_hidden)),
-            'out': tf.Variable(random_normal(n_hidden, num_classes))
+             'h' : tf.Variable(random_normal([num_features, n_hidden])),
+            'out': tf.Variable(random_normal([n_hidden, num_classes]))
         }
 biases={
-    'b': tf.Variable(tf.zeros(n_hidden)),
-    'out':tf.Variable(tf.zeros(num_classes))
+    'b': tf.Variable(tf.zeros([n_hidden])),
+    'out':tf.Variable(tf.zeros([num_classes]))
 }
 
 def neural_net(input_data):
@@ -77,3 +77,4 @@ def run_optimizer(x, y):
     gradients= g.gradient(loss, trainable_variables)
 
     return optimizer.apply_gradient(zip(gradients, trainable_variables))
+
