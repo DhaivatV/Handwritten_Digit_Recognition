@@ -22,14 +22,7 @@ def displayimgs (num):
     plt.show()
 
 displayimgs(144)
-
-# clf = LogisticRegression()
-# clf.fit(x_train, y_train)
-
-# prediction = clf.predict(x_test[144].reshape([1, 784]))
-
-
-    
+  
 
 learning_rate= 0.003
 training_steps= 3000
