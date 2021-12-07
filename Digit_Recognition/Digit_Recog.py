@@ -31,10 +31,10 @@ displayimgs(144)
 
     
 
-learning_rate= 0.0003
-training_steps= 5000
-batch_size= 300
-display_step =300
+learning_rate= 0.003
+training_steps= 3000
+batch_size= 250
+display_step =100
 
 n_hidden= 512
 
@@ -62,13 +62,13 @@ def neural_net(input_data):
 
 def cross_entropy(y_pred, y_true):
     y_true= tf.one_hot(y_true, depth= num_classes)
-    y_pred= tf.clip_by_value(y_pred, le-9, 1)
+    y_pred = tf.clip_by_value(y_pred, 1e-9, 1.)
     return tf.reduce_mean(-tf.reduce_sum(y_true*tf.math.log(y_pred)))
 
 optimizer = tf.keras.optimizers.SGD(learning_rate)
 
-def run_optimizer(x, y):
-    with tf.GradientTape as g:
+def run_optimization(x, y):
+    with tf.GradientTape() as g:
         pred= neural_net(x)
         loss= cross_entropy(pred, y)
 
@@ -76,5 +76,19 @@ def run_optimizer(x, y):
 
     gradients= g.gradient(loss, trainable_variables)
 
-    return optimizer.apply_gradient(zip(gradients, trainable_variables))
+    return optimizer.apply_gradients(zip(gradients, trainable_variables))
 
+def accu (y_pred, y_true):
+    correct_prediction= tf.equal(tf.argmax(y_pred, 1), tf.cast(y_true, tf.int64))
+    return tf.reduce_mean(tf.cast(correct_prediction, tf.float32), axis=-1)
+
+for step, (batch_x, batch_y) in enumerate(train_data.take(training_steps),1):
+    run_optimization(batch_x, batch_y)
+    if step%display_step==0:
+        pred=neural_net(batch_x)
+        loss=cross_entropy(pred, batch_y)
+        accuracy= accu(pred, batch_y)
+        print("Training Epoch: %i, Loss: %f, Accuracy:%f"%(step, loss, accuracy))
+
+pred= neural_net(x_test)
+print("Test Accuracy: %f" % accu(pred, y_test))
