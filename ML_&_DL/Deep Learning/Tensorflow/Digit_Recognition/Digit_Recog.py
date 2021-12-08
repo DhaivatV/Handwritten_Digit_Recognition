@@ -6,6 +6,8 @@ from tensorflow.keras.datasets import mnist
 import matplotlib.pyplot as plt
 from tensorflow.python.ops.variables import trainable_variables
 from sklearn.linear_model import LogisticRegression
+from math import sqrt
+from sklearn.metrics import mean_squared_error
 
 num_classes = 10
 num_features = 784
@@ -93,7 +95,7 @@ predictions = neural_net(test_images)
 
 for i in range(n_images):
     model_prediction = np.argmax(predictions.numpy()[i])
-    if (model_prediction == test_labels[i]):
+    if (model_prediction != test_labels[i]):
         plt.imshow(np.reshape(test_images[i], [28, 28]), cmap='gray_r')
         plt.title("Original Labels: %i,Model prediction: %i" % (test_labels[i],model_prediction))
         plt.show()
@@ -102,4 +104,13 @@ for i in range(n_images):
 
 
 
+# model= LogisticRegression()
+# model.fit(x_train, y_train)
 
+# pred= model.predict(x_test)
+
+
+
+# print(sqrt(mean_squared_error(pred, y_test)))
+# score= model.score(x_test, y_test)
+# print(score)
