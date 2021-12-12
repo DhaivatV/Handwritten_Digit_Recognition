@@ -99,18 +99,6 @@ for i in range(n_images):
         plt.imshow(np.reshape(test_images[i], [28, 28]), cmap='gray_r')
         plt.title("Original Labels: %i,Model prediction: %i" % (test_labels[i],model_prediction))
         plt.show()
-        # print("Original Labels: %i" % test_labels[i])
-        # print("Model prediction: %i" % model_prediction)
+      
 
 
-
-# model= LogisticRegression()
-# model.fit(x_train, y_train)
-
-# pred= model.predict(x_test)
-
-
-
-# print(sqrt(mean_squared_error(pred, y_test)))
-# score= model.score(x_test, y_test)
-# print(score)
